@@ -1,0 +1,38 @@
+# FastAPI and core dependencies
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+pydantic-settings
+passlib[bcrypt]
+python-multipart
+email-validator
+python-dotenv
+psycopg2-binary
+alembic
+
+# JWT Authentication
+PyJWT
+
+# RAG and AI dependencies
+langchain>=0.3.27
+langchain-community>=0.3.29
+langchain-core
+langchain-google-genai>=0.0.11
+langchain-huggingface>=0.3.1
+langchain-pinecone>=0.2.12
+langchain-openai
+pinecone-client>=3.0.0
+sentence-transformers>=3.0.0
+
+# Google AI
+google-generativeai>=0.8.0
+
+# Vector embeddings
+huggingface-hub
+transformers
+torch
+
+# Additional utilities
+plotly>=6.3.0
+numpy
