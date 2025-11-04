@@ -1,7 +1,36 @@
 [project]
 name = "fyp-rag"
 version = "0.1.0"
-description = "Add your description here"
+description = "DocThinker - AI-Powered Academic Assistant with RAG for Linear Algebra, Discrete Math, and Calculus"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "fastapi>=0.121.0",
+    "uvicorn>=0.38.0",
+    "sqlalchemy>=2.0.44",
+    "pydantic>=2.12.3",
+    "pydantic-settings>=2.11.0",
+    "passlib[bcrypt]>=1.7.4",
+    "python-multipart>=0.0.20",
+    "email-validator>=2.3.0",
+    "python-dotenv>=1.2.1",
+    "psycopg2-binary>=2.9.11",
+    "alembic>=1.17.1",
+    "PyJWT>=2.10.1",
+    "langchain>=0.3.27",
+    "langchain-community>=0.3.29",
+    "langchain-core>=0.3.79",
+    "langchain-google-genai>=0.0.11",
+    "langchain-huggingface>=0.3.1",
+    "langchain-pinecone>=0.2.12",
+    "langchain-openai>=0.3.35",
+    "pinecone-client>=3.0.0",
+    "sentence-transformers>=3.0.0",
+    "google-generativeai>=0.8.0",
+    "huggingface-hub>=0.36.0",
+    "transformers>=4.57.1",
+    "torch>=2.9.0",
+    "plotly>=6.3.0",
+    "numpy>=2.3.4",
+    "filetype>=1.2.0",
+]

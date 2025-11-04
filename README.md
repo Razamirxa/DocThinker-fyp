@@ -1,6 +1,6 @@
-# Integrated RAG-based Academic Assistant
+# DocThinker - AI-Powered Academic Assistant 🎓
 
-A full-stack web application combining a modern React frontend with a powerful FastAPI backend integrated with a Retrieval-Augmented Generation (RAG) system for academic question answering.
+An intelligent RAG-based chatbot for academic subjects including **Linear Algebra**, **Discrete Mathematics**, and **Calculus**. Built with FastAPI backend and modern React frontend.
 
 ## 🏗️ Architecture
 
@@ -9,53 +9,140 @@ A full-stack web application combining a modern React frontend with a powerful F
 - **UI**: TailwindCSS with custom theme system
 - **Routing**: React Router v6
 - **HTTP Client**: Axios
-- **Features**: Authentication, Chat with RAG, Document Management, Analytics Dashboard
+- **Features**: Real-time chat, Authentication, Analytics Dashboard
 
 ### Backend
 - **Framework**: FastAPI
 - **Database**: PostgreSQL
 - **Authentication**: JWT tokens
 - **RAG Engine**:
-  - **Vector Store**: Pinecone
-  - **Embeddings**: HuggingFace (sentence-transformers/all-MiniLM-L6-v2)
-  - **LLM**: Google Gemini Pro
+  - **Vector Store**: Pinecone (semester-books index)
+  - **Embeddings**: HuggingFace sentence-transformers/all-MiniLM-L6-v2 (384 dimensions)
+  - **LLM**: Google Gemini 2.5 Flash
   - **Framework**: LangChain
-  - **Subjects**: Linear Algebra, Discrete Structures, Calculus
+  - **Supported Subjects**: Linear Algebra, Discrete Structures, Calculus & Analytical Geometry
 
 ## 📋 Prerequisites
 
-- Python 3.12+
-- Node.js 18+
-- PostgreSQL 15+
-- Pinecone account
-- Google AI Studio account
+Before you begin, ensure you have:
+- **Python 3.13+** installed
+- **Node.js 18+** and npm
+- **PostgreSQL 15+** installed and running
+- **UV** (Python package manager) - Install: `pip install uv`
+- **Git** for cloning the repository
+- **VS Code** (recommended) or any code editor
 
-## 🚀 Quick Start
+### Required Accounts & API Keys
+- [Google AI Studio](https://makersuite.google.com/app/apikey) - For Gemini API key
+- [Pinecone](https://www.pinecone.io/) - For vector database
 
-### 1. Backend Setup
+## 🚀 Complete Setup Guide
+
+### Step 1: Clone the Repository
 
 ```bash
-cd backend
+# Clone the repository
+git clone https://github.com/Razamirxa/DocThinker-fyp.git
 
-# Create virtual environment
-python -m venv venv
-venv\Scripts\activate  # Windows
-# source venv/bin/activate  # Linux/Mac
+# Navigate to project directory
+cd DocThinker-fyp
 
-# Install dependencies
-pip install -r requirements.txt
-
-# Configure environment
-copy .env.example .env
-# Edit .env with your credentials
-
-# Start server
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+# Open in VS Code
+code .
 ```
 
-### 2. Frontend Setup
+### Step 2: Backend Setup with UV
 
 ```bash
+# Navigate to project root
+cd DocThinker-fyp
+
+# Create UV virtual environment
+uv venv
+
+# Activate the environment
+# Windows PowerShell:
+.venv\Scripts\activate
+
+# Linux/Mac:
+# source .venv/bin/activate
+
+# Install all dependencies using uv sync
+uv sync
+
+# Navigate to backend directory
+cd backend
+
+# Create .env file from example
+copy .env.example .env  # Windows
+# cp .env.example .env  # Linux/Mac
+```
+
+### Step 3: Configure Environment Variables
+
+Edit `backend/.env` file with your credentials:
+
+```env
+# Database Configuration
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=your_postgres_password
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=fyp_db
+
+# JWT Secret Key (generate a secure random string)
+SECRET_KEY=your_secure_secret_key_here
+
+# RAG Engine API Keys
+GOOGLE_API_KEY=your_google_gemini_api_key
+PINECONE_API_KEY=your_pinecone_api_key
+
+# RAG Configuration
+DEFAULT_RAG_MODEL=gemini-2.5-flash
+PINECONE_INDEX_NAME=semester-books
+```
+
+### Step 4: Setup PostgreSQL Database
+
+```bash
+# Open PostgreSQL command line (psql)
+psql -U postgres
+
+# Create database
+CREATE DATABASE fyp_db;
+
+# Exit psql
+\q
+```
+
+### Step 5: Setup Pinecone Index
+
+1. Log in to [Pinecone Console](https://app.pinecone.io/)
+2. Create a new index with these settings:
+   - **Name**: `semester-books`
+   - **Dimensions**: `384`
+   - **Metric**: `cosine`
+3. Copy your API key to `.env` file
+
+### Step 6: Start Backend Server
+
+```bash
+# Make sure you're in the backend directory with activated virtual environment
+cd backend
+
+# Start FastAPI server
+python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
+
+# Server will start at: http://localhost:8000
+# API Docs available at: http://localhost:8000/docs
+```
+
+### Step 7: Frontend Setup
+
+Open a **new terminal** (keep backend running):
+
+```bash
+# Navigate to frontend directory
 cd frontend
 
 # Install dependencies
@@ -63,9 +150,19 @@ npm install
 
 # Start development server
 npm run dev
+
+# Frontend will start at: http://localhost:5173
 ```
 
-The app will be available at `http://localhost:5173`
+## 🎯 First Time Usage
+
+1. **Open Browser**: Navigate to `http://localhost:5173`
+2. **Create Account**: Click "Sign Up" and create your account (first user will be admin)
+3. **Login**: Use your credentials to login
+4. **Start Chatting**: 
+   - Ask questions directly in the chat
+   - Examples: "What are eigenvalues?", "Explain graph theory", "What is calculus?"
+5. The RAG engine auto-initializes on startup using your API keys!
 
 ## 🔑 Required API Keys
 
@@ -141,12 +238,33 @@ curl -X POST http://localhost:8000/api/rag/initialize \
 - "How do I find derivatives?"
 - "Explain integration by parts"
 
+## � Quick Commands Reference
+
+```bash
+# Setup (one-time)
+git clone https://github.com/Razamirxa/DocThinker-fyp.git
+cd DocThinker-fyp
+uv venv
+.venv\Scripts\activate
+uv sync
+
+# Backend (in terminal 1)
+cd backend
+python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
+
+# Frontend (in terminal 2)
+cd frontend
+npm install
+npm run dev
+```
+
 ## 🛠️ Project Structure
 
 ```
-RaG-based-system-main/
+DocThinker-fyp/
 ├── backend/
-│   ├── main.py              # FastAPI app
+│   ├── main.py              # FastAPI app entry point
+│   ├── rag_engine.py        # RAG core logic
 │   ├── rag_engine.py        # RAG core
 │   ├── config.py            # Settings
 │   ├── requirements.txt     # Dependencies
